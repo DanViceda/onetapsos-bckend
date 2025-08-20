@@ -10,7 +10,13 @@ SECRET_KEY = 'django-insecure-jbilu%!qfp0@$1s2m=fz%u)aha3l)x$gi&6jj3sv(_@hz*-j9a
 DEBUG = True
 
 # Hosts allowed to access the server (use '*' for development, restrict in production)
-ALLOWED_HOSTS = ["*"]
+# settings.py
+ALLOWED_HOSTS = [
+    "127.0.0.1",  # local testing
+    "localhost",
+    "onetapsos-bckend.onrender.com",  # Render URL
+]
+
 
 
 # For development only
@@ -71,9 +77,10 @@ WSGI_APPLICATION = 'onetapsosusers.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # SQLite database file
     }
 }
+
 
 # Password validation rules
 AUTH_PASSWORD_VALIDATORS = [
