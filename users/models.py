@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.email
+        return self.email if self.email else self.username

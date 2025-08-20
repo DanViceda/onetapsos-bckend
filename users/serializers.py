@@ -4,10 +4,12 @@ from .models import CustomUser
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    is_staff = serializers.BooleanField(default=False)
+    is_superuser = serializers.BooleanField(default=False)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'full_name', 'phone']
+        fields = ['username', 'email', 'password', 'full_name', 'phone', 'is_staff', 'is_superuser']
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
@@ -15,9 +17,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password'],
             full_name=validated_data.get('full_name', ''),
-            phone=validated_data.get('phone', '')
+            phone=validated_data.get('phone', ''),
+            is_staff=validated_data.get('is_staff', False),
+            is_superuser=validated_data.get('is_superuser', False),
         )
-        user.is_active = True  # siguruhin active ang user
-        user.is_staff = False  # hindi staff
+        user.is_active = True
         user.save()
         return user
