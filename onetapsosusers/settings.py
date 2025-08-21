@@ -7,16 +7,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jbilu%!qfp0@$1s2m=fz%u)aha3l)x$gi&6jj3sv(_@hz*-j9a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Set to False in production
+DEBUG = True
 
-# Hosts allowed to access the server
+# Hosts allowed to access the server (use '*' for development, restrict in production)
+# settings.py
 ALLOWED_HOSTS = [
-    "127.0.0.1",
+    "127.0.0.1",  # local testing
     "localhost",
-    "onetapsos-bckend.onrender.com",
+    "onetapsos-bckend.onrender.com",  # Render URL
 ]
 
-# Installed apps
+
+
+# For development only
+
+# Installed apps (core Django + custom + third-party)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,12 +38,11 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# Middleware stack
+# Middleware stack (request/response processing)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Added for static file serving
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Must be above CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,7 +57,7 @@ ROOT_URLCONF = 'onetapsosusers.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # Add custom template directories here if needed
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,48 +70,54 @@ TEMPLATES = [
     },
 ]
 
-# WSGI application
+# WSGI application entry point
 WSGI_APPLICATION = 'onetapsosusers.wsgi.application'
 
-# Database configuration
+# Database configuration (SQLite for development)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # SQLite database file
     }
 }
 
-# Password validation
+
+# Password validation rules
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
-# Internationalization
+# Internationalization settings
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Manila'
+TIME_ZONE = 'Asia/Manila'  # Adjusted for your location
 USE_I18N = True
 USE_TZ = True
 
-# Static files configuration
+# Static file configuration
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# ✅ WhiteNoise static file storage
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom user model
+# Custom user model reference
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# CORS configuration
+# CORS configuration (allow all origins for development)
 CORS_ALLOW_ALL_ORIGINS = True
 
-# REST Framework settings
+# Optional: REST Framework global settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
