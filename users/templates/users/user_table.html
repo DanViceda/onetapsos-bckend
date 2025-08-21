@@ -22,7 +22,7 @@
   </table>
 
   <script>
-    fetch('https://your-domain.com/api/users/users/')
+    fetch('http://127.0.0.1:8000/api/users/users/')
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('user-table-body');

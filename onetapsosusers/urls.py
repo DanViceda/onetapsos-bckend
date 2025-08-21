@@ -17,8 +17,11 @@ Including another URLconf
 # onetapsosusers/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from users.views import user_table_view
 
+# onetapsosusers/urls.py
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.urls')),  # dapat naka-include users app
+    path('api/users/', include('users.urls')),  # API endpoints
+    path('user-table/', user_table_view, name='user-table'),  # HTML view outside API
 ]

@@ -24,3 +24,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.is_active = True
         user.save()
         return user
+
+class UserDisplaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'full_name', 'phone', 'is_staff', 'is_superuser', 'created_at']
