@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Table</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-4">Registered Users</h1>
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4 text-left">Username</th>
+        <th class="py-2 px-4 text-left">Email</th>
+        <th class="py-2 px-4 text-left">Full Name</th>
+        <th class="py-2 px-4 text-left">Phone</th>
+      </tr>
+    </thead>
+    <tbody id="user-table-body">
+      <!-- Data will be injected here -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('https://your-domain.com/api/users/users/')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById('user-table-body');
+        data.forEach(user => {
+          const row = `
+            <tr class="border-t">
+              <td class="py-2 px-4">${user.username}</td>
+              <td class="py-2 px-4">${user.email}</td>
+              <td class="py-2 px-4">${user.full_name}</td>
+              <td class="py-2 px-4">${user.phone}</td>
+            </tr>
+          `;
+          tbody.innerHTML += row;
+        });
+      });
+  </script>
+</body>
+</html>
