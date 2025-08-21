@@ -22,7 +22,7 @@
   </table>
 
   <script>
-    fetch('http://127.0.0.1:8000/api/users/users/')
+    fetch('https://onetapsos-bckend.onrender.com/api/users/users/')
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('user-table-body');
