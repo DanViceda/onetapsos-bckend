@@ -1,4 +1,3 @@
-# settings.py
 from pathlib import Path
 import os
 import dj_database_url
@@ -61,7 +60,9 @@ WSGI_APPLICATION = 'onetapsosusers.wsgi.application'
 
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL')
-if DEBUG or not DATABASE_URL:
+if not DATABASE_URL and not DEBUG:
+    raise ValueError("DATABASE_URL is required in production (DEBUG=False)")
+if DEBUG and not DATABASE_URL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -70,7 +71,7 @@ if DEBUG or not DATABASE_URL:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=not DEBUG)
     }
 
 AUTH_PASSWORD_VALIDATORS = [
