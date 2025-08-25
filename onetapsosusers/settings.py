@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-jbilu%!qfp0@$1s2m=fz%u)aha3l)x$gi&6jj3sv(_@hz*-j9a')
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = os.getenv('DEBUG', 'True') == 'True'  # Default to True for local dev
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -60,7 +60,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'onetapsosusers.wsgi.application'
 
 # Database configuration
-if DEBUG:
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DEBUG or not DATABASE_URL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -69,7 +70,7 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.parse(os.getenv('postgresql://onetapsos_user:00Wf20mHzxBR0IDtGrssFJhC3TkgPwuC@dpg-d2i8c9ogjchc73e6lor0-a/onetapsos_db'))
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     }
 
 AUTH_PASSWORD_VALIDATORS = [
