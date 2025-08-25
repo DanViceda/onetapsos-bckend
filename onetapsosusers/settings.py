@@ -1,27 +1,20 @@
+# settings.py
 from pathlib import Path
+import os
+import dj_database_url
 
-# Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jbilu%!qfp0@$1s2m=fz%u)aha3l)x$gi&6jj3sv(_@hz*-j9a'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-jbilu%!qfp0@$1s2m=fz%u)aha3l)x$gi&6jj3sv(_@hz*-j9a')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# Hosts allowed to access the server (use '*' for development, restrict in production)
-# settings.py
 ALLOWED_HOSTS = [
-    "127.0.0.1",  # local testing
+    "127.0.0.1",
     "localhost",
-    "onetapsos-bckend.onrender.com",  # Render URL
+    "onetapsos-bckend.onrender.com",
 ]
 
-
-
-# For development only
-
-# Installed apps (core Django + custom + third-party)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,32 +22,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Custom app
     'users',
-
-    # Third-party apps
     'rest_framework',
     'corsheaders',
 ]
 
-# Middleware stack (request/response processing)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Must be above CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-# Root URL configuration
 ROOT_URLCONF = 'onetapsosusers.urls'
 
-# Template engine configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,19 +57,21 @@ TEMPLATES = [
     },
 ]
 
-# WSGI application entry point
 WSGI_APPLICATION = 'onetapsosusers.wsgi.application'
 
-# Database configuration (SQLite for development)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # SQLite database file
+# Database configuration
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.getenv('postgresql://onetapsos_user:00Wf20mHzxBR0IDtGrssFJhC3TkgPwuC@dpg-d2i8c9ogjchc73e6lor0-a/onetapsos_db'))
+    }
 
-
-# Password validation rules
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -99,26 +87,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization settings
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Manila'  # Adjusted for your location
+TIME_ZONE = 'Asia/Manila'
 USE_I18N = True
 USE_TZ = True
 
-# Static file configuration
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom user model reference
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# CORS configuration (allow all origins for development)
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Optional: REST Framework global settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],

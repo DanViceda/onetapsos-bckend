@@ -27,3 +27,4 @@ class UserListView(ListAPIView):
 # Django view to render the HTML table
 def user_table_view(request):
     return render(request, 'users/user_table.html')
+
