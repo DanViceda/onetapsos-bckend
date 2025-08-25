@@ -2,24 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Table</title>
+  <title>OneTapSOS | User Table</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" />
 </head>
-<body class="bg-gray-100 p-6">
-  <h1 class="text-2xl font-bold mb-4">Registered Users</h1>
-  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="py-2 px-4 text-left">Username</th>
-        <th class="py-2 px-4 text-left">Email</th>
-        <th class="py-2 px-4 text-left">Full Name</th>
-        <th class="py-2 px-4 text-left">Phone</th>
-      </tr>
-    </thead>
-    <tbody id="user-table-body">
-      <!-- Data will be injected here -->
-    </tbody>
-  </table>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+
+  <div class="max-w-5xl mx-auto py-10 px-4">
+    <header class="mb-6">
+      <h1 class="text-4xl font-bold tracking-tight">🚨 OneTapSOS</h1>
+      <p class="text-base text-gray-600 mt-1">Registered Users Overview</p>
+    </header>
+
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-3 text-sm font-medium text-gray-700 text-left">Username</th>
+            <th class="px-4 py-3 text-sm font-medium text-gray-700 text-left">Email</th>
+            <th class="px-4 py-3 text-sm font-medium text-gray-700 text-left">Full Name</th>
+            <th class="px-4 py-3 text-sm font-medium text-gray-700 text-left">Phone</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body" class="divide-y divide-gray-100">
+          <!-- Data will be injected here -->
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="mt-8 text-sm text-gray-500 text-left">
+      &copy; 2025 OneTapSOS. All rights reserved.
+    </footer>
+  </div>
 
   <script>
     fetch('https://onetapsos-bckend.onrender.com/api/users/users/')
@@ -28,11 +42,11 @@
         const tbody = document.getElementById('user-table-body');
         data.forEach(user => {
           const row = `
-            <tr class="border-t">
-              <td class="py-2 px-4">${user.username}</td>
-              <td class="py-2 px-4">${user.email}</td>
-              <td class="py-2 px-4">${user.full_name}</td>
-              <td class="py-2 px-4">${user.phone}</td>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-4 py-3 text-sm">${user.username}</td>
+              <td class="px-4 py-3 text-sm">${user.email}</td>
+              <td class="px-4 py-3 text-sm">${user.full_name}</td>
+              <td class="px-4 py-3 text-sm">${user.phone}</td>
             </tr>
           `;
           tbody.innerHTML += row;
